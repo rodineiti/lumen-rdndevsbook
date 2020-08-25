@@ -35,31 +35,51 @@ class Post extends Model
         return null;
     }
 
+    /**
+     * @return bool
+     */
     public function getPostOwnerAttribute()
     {
         return $this->user_id === auth()->user()->id;
     }
 
+    /**
+     * @return bool
+     */
     public function getPostOwnerLikeAttribute()
     {
         return (new PostLike())->post_like_owner($this->id);
     }
 
+    /**
+     * @return mixed
+     */
     public function getLikesCountAttribute()
     {
         return (new PostLike())->likes_count($this->id);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function likes()
     {
         return $this->hasMany(PostLike::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function comments()
     {
         return $this->hasMany(PostComment::class);
     }
 
+    /**
+     * @param $query
+     * @param string $type
+     * @return mixed
+     */
     public function scopeType($query, $type = 'text')
     {
         return $query->where('type', $type);

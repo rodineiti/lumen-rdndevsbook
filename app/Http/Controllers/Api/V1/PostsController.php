@@ -10,6 +10,10 @@ use Intervention\Image\Facades\Image;
 
 class PostsController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function index(Request $request)
     {
         $limit = $request->limit ?? self::LIMIT;
@@ -39,6 +43,11 @@ class PostsController extends Controller
         return response()->json($posts);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function store(Request $request)
     {
         $user = User::where('id', $request->user()->id)->first();
@@ -77,6 +86,11 @@ class PostsController extends Controller
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @param $user_id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function byUser(Request $request, $user_id)
     {
         $user = User::where('id', $request->user()->id)->first();
@@ -112,6 +126,11 @@ class PostsController extends Controller
         return response()->json(["user" => $user]);
     }
 
+    /**
+     * @param Request $request
+     * @param $post_id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function like(Request $request, $post_id)
     {
         $user = User::where('id', $request->user()->id)->first();
@@ -151,6 +170,12 @@ class PostsController extends Controller
         return response()->json(["error" => false, "message" => $message, "isLiked" => $isLiked, "likesCount" => $count]);
     }
 
+    /**
+     * @param Request $request
+     * @param $post_id
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function comment(Request $request, $post_id)
     {
         $user = User::where('id', $request->user()->id)->first();

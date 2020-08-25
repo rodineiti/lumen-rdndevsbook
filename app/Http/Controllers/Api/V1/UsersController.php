@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
+    /**
+     * @param Request $request
+     * @param $user_id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function follow(Request $request, $user_id)
     {
         $user = User::where('id', $request->user()->id)->first();

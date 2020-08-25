@@ -10,6 +10,11 @@ use Intervention\Image\Facades\Image;
 
 class AuthController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function register(Request $request)
     {
         $this->validate($request, [
@@ -44,6 +49,11 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function updateProfile(Request $request)
     {
         $user = User::where('id', $request->user()->id)->first();
@@ -72,6 +82,11 @@ class AuthController extends Controller
         return response()->json($user);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function setAvatar(Request $request)
     {
         $user = User::where('id', $request->user()->id)->first();
@@ -98,6 +113,11 @@ class AuthController extends Controller
         return response()->json($user);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function setCover(Request $request)
     {
         $user = User::where('id', $request->user()->id)->first();
@@ -124,6 +144,10 @@ class AuthController extends Controller
         return response()->json($user);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function me(Request $request)
     {
         $limit = $request->limit ?? self::LIMIT;
@@ -161,6 +185,9 @@ class AuthController extends Controller
         return response()->json(["user" => $user]);
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function logout()
     {
         if (Auth::check()) {

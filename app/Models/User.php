@@ -68,6 +68,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return null;
     }
 
+    /**
+     * @return int|null
+     */
     public function getBirthdateAgeAttribute()
     {
         if ($this->birthdate) {
@@ -82,6 +85,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return null;
     }
 
+    /**
+     * @return mixed
+     */
     public function getPhotosCountAttribute()
     {
         return $this->posts()->type('photo')->count();
@@ -111,6 +117,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->hasMany('\App\Models\OauthAccessToken');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function followings()
     {
         return $this->hasMany(
@@ -120,6 +129,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         );
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function followers()
     {
         return $this->hasMany(

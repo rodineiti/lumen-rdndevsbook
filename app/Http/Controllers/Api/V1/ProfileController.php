@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
+    /**
+     * @param Request $request
+     * @param $user_id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function byUser(Request $request, $user_id)
     {
         $limit = $request->limit ?? self::LIMIT;

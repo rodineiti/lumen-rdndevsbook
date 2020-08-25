@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function index(Request $request)
     {
         $user = User::where('id', $request->user()->id)->first();
