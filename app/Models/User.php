@@ -19,7 +19,30 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'birthdate', 'city', 'work', 'avatar', 'cover'
+        'name',
+        'email',
+        'password',
+        'birthdate',
+        'city',
+        'work',
+        'avatar',
+        'cover',
+        'domain',
+        'subdomain',
+        'facebook',
+        'facebook_page_id',
+        'facebook_pixel',
+        'google_analytics',
+        'whatsapp',
+        'email_contact',
+        'site_title',
+        'site_keywords',
+        'site_description',
+        'plan_id',
+        'next_expiration',
+        'disabled_account',
+        'delete_account',
+        'status',
     ];
 
     /**
@@ -122,11 +145,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     public function followings()
     {
-        return $this->hasMany(
-            UserFollowing::class,
-            'user_id_from',
-            'id'
-        );
+        return $this->hasMany(UserFollowing::class, 'user_id_from', 'id');
     }
 
     /**
@@ -134,10 +153,14 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     public function followers()
     {
-        return $this->hasMany(
-            UserFollowing::class,
-            'user_id_to',
-            'id'
-        );
+        return $this->hasMany(UserFollowing::class, 'user_id_to', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function vehicles()
+    {
+        return $this->hasMany(Vehicle::class, 'user_id', 'id');
     }
 }
