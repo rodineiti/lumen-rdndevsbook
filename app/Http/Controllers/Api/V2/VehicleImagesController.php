@@ -2,31 +2,22 @@
 
 namespace App\Http\Controllers\Api\V2;
 
-use App\Models\Vehicle;
-use App\Models\VehicleFuel;
-use App\Models\VehicleType;
-use App\Models\VehicleDoors;
-use App\Models\VehicleBrand;
-use App\Models\VehicleModel;
-use App\Models\VehicleVersion;
 use App\Models\VehiclePhotos;
-use App\Models\VehicleRegdate;
-use App\Models\VehicleGearbox;
-use App\Models\VehicleFeatures;
-use App\Models\VehicleCarcolor;
-use App\Models\VehicleExchange;
-use App\Models\VehicleCubiccms;
-use App\Models\VehicleFinancial;
-use App\Models\VehicleMotorpower;
-use App\Models\VehicleCarSteering;
-
-use App\Traits\ApiAuthTraitCrud;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
 
 class VehicleImagesController extends Controller
 {
+    protected $model;
+    protected $column = "id";
+    protected $direction = "asc";
+    
+    public function __construct(VehiclePhotos $model)
+    {
+        $this->model = $model;
+    }
+
     public function upload(\Illuminate\Http\Request $request)
     {
         $file = $request->file('file');
@@ -58,5 +49,19 @@ class VehicleImagesController extends Controller
 
             return response()->json(['error' => true, 'message' => 'Erro ao cadastrar imagem']);
         }
+    }
+
+    public function destroy($id)
+    {
+        $result = $this->model->findOrFail($id);
+
+        $path = 'vehicles/'.auth()->user()->id.'/'.$result->vehicle_id.'/'.$result->image;
+        if(Storage::exists($path)) {
+            Storage::delete($path);
+        }
+
+        $result->delete();
+
+        return response()->json(['message' => 'Deletado com sucesso'], 200);
     }
 }

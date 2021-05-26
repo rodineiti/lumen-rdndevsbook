@@ -53,6 +53,7 @@ $router->group(['prefix' => 'api/v2', 'namespace' => 'Api\V2', 'middleware' => [
     $router->get('/vehicles/{vehicle_brand}/{vehicle_model}/version', 'VehiclesController@version');
 
     $router->post('/vehicles_images/upload', 'VehicleImagesController@upload');
+    $router->delete('/vehicles_images/{id}', 'VehicleImagesController@destroy');
 
     $router->get('/getcombo', 'VehiclesController@getCombo');
 
